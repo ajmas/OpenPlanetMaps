@@ -1,0 +1,15 @@
+{
+   "name": "LRO LOLA Elevation Model",
+   "description": "",   
+   "license": "public-domain",
+   "linkTo": "http://astrogeology.usgs.gov/maps/mdim-2-1",
+   "author": "USGS Astrogeology Science Center",
+   "updated": "2015-09-19",
+   "source": {
+      "descriptive": "http://astrogeology.usgs.gov/search/map/Mars/Viking/MDIM21/Mars_Viking_MDIM21_ClrMosaic_global_232m",
+      "images": [{
+         "url": "http://astropedia.astrogeology.usgs.gov/download/Mars/Viking/MDIM21/Ancillary/Mars_Viking_MDIM21_ClrMosaic_1km.jpg"
+      }, {
+         "url": "http://astropedia.astrogeology.usgs.gov/download/Mars/Viking/MDIM21/Ancillary/Mars_Viking_MDIM21_ClrMosaic_global_232m_ly10.jp2"
+      }]   
+}

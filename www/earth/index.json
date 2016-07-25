@@ -1,0 +1,13 @@
+{
+   "name": "earth",
+   "satellite-of": "sun",
+   "satellites": [ ],
+   "description": "",   
+   "circumference": 40075,
+   "layers": [{
+      "name": "satellite",
+      "type": "raster",
+      "path": "raster/satellite"
+   }]
+}
+

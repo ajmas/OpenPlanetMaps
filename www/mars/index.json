@@ -1,0 +1,13 @@
+{
+   "name": "mars",
+   "satellite-of": "sun",
+   "satellites": [ ],
+   "description": "",   
+   "circumference": 21344,
+   "layers": [{
+      "name": "satellite",
+      "type": "raster",
+      "path": "raster/satellite"
+   }]
+}
+

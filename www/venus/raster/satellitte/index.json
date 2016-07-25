@@ -1,0 +1,15 @@
+{
+   "name": "Magellan Global C3-MDIR Colorized Mosaic",
+   "description": "A synthetic colorized version of the C3-MIDR mosaic to simulate the surface of Venus.",   
+   "license": "public-domain",
+   "linkTo": "http://astrogeology.usgs.gov/search/map/Venus/Magellan/Colorized/Venus_Magellan_C3-MDIR_Colorized_Global_Mosaic_4641m",
+   "author": "USGS Astrogeology Science Center",
+   "updated": "2014-04-07",
+   "source": {
+      "descriptive": "http://astrogeology.usgs.gov/search/map/Venus/Magellan/Colorized/Venus_Magellan_C3-MDIR_Colorized_Global_Mosaic_4641m",
+      "images": [{
+         "url": "http://astropedia.astrogeology.usgs.gov/download/Venus/Magellan/Colorized/thumbs/Venus_Magellan_C3-MDIR_Colorized_Global_Mosaic_4641m.jpg"
+      }, {
+         "url": "http://astropedia.astrogeology.usgs.gov/download/Venus/Magellan/Colorized/Venus_Magellan_C3-MDIR_Colorized_Global_Mosaic_4641m.cub"
+      }]   
+}
