@@ -1,0 +1,26 @@
+{
+    "name": "Io (visible)",
+    "description": "",
+    "license": "public-domain",
+    "linkTo": "http://astrogeology.usgs.gov/",
+    "author": "USGS Astrogeology Science Center",
+    "credit": "USGS Astrogeology Science Center",
+    "updated": "2014-10-22",
+    "orbitalbody": {
+        "type": "planet",
+        "radius": 1815
+    },
+    "source": {
+        "descriptive": "http://astrogeology.usgs.gov/search/map/Io/Voyager-Galileo/Io_GalileoSSI-Voyager_Global_Mosaic_ClrMerge_1km",
+        "images": [{
+            "quality": "low",
+            "url": "https://astropedia.astrogeology.usgs.gov/download/Io/Voyager-Galileo/Io_GalileoSSI-Voyager_Global_Mosaic_ClrMerge_1km.cub/full.jpg"
+        }, {
+            "quality": "mediun",
+            "url": "https://astropedia.astrogeology.usgs.gov/download/Io/Voyager-Galileo/Io_GalileoSSI-Voyager_Global_Mosaic_ClrMerge_1km.cub/max.jpg"
+        }, {
+            "quality": "high",
+            "url": "https://astropedia.astrogeology.usgs.gov/download/Io/Voyager-Galileo/Io_GalileoSSI-Voyager_Global_Mosaic_ClrMerge_1km.cub"
+        }]
+    }
+}

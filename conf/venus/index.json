@@ -1,0 +1,13 @@
+{
+    "name": "Venus",
+    "satelliteOf": "sun",
+    "satellites": [],
+    "description": "",
+    "equitorialRadius": 6051.8,
+    "layers": [{
+        "path": "raster/visible"
+    }],
+    "ref": {
+        "NASA Fact Sheet": "http://nssdc.gsfc.nasa.gov/planetary/factsheet/venusfact.html"
+    }
+}

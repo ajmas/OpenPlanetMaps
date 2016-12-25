@@ -1,0 +1,10 @@
+{
+    "name": "The Moon",
+    "satelliteOf": "sun",
+    "satellites": [],
+    "description": "",
+    "equitorialRadius": 1738.1,
+    "layers": [{
+        "path": "raster/elevation"
+    }]
+}

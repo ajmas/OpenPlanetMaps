@@ -1,0 +1,10 @@
+{
+    "name": "Earth",
+    "satelliteOf": "sun",
+    "satellites": [],
+    "description": "",
+    "equitorialRadius": 6378.137,
+    "layers": [{
+        "path": "raster/blueearth"
+    }]
+}
