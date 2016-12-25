@@ -1,0 +1,11 @@
+{
+    "name": "Mercury",
+    "satelliteOf": "The Sun",
+    "satellites": [],
+    "description": "",
+    "equitorialRadius": 1738.1,
+    "layers": [],
+    "references": {
+        "IAU": "https://planetarynames.wr.usgs.gov/Page/MERCURY/target"
+    }
+}

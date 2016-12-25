@@ -1,0 +1,32 @@
+#html, body {
+   margin: 0;
+   display: relative;
+}
+#topnav {
+   padding: 5px 0px 5px 15px;
+   border: solid 1px; black;
+   height: 42px;
+   display: block;
+}
+
+#topnav select {
+   margin: 8px 0 8px 8px;
+   display: inline-block;
+}
+
+#map {
+   position: absolute;
+   top: 42px;
+   right: 0;
+   bottom: 0;
+   left: 0;
+   border: solid 1px; black;
+   background-color: black;
+}
+
+#logo {
+   height: 40px;
+   float: right;
+   margin-top: -4px;
+}   
+   

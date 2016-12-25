@@ -1,0 +1,9 @@
+{
+    "name": "mars",
+    "satelliteOf": "sun",
+    "description": "",
+    "equitorialRadius": 3396.2,
+    "layers": [{
+        "path": "raster/satellite"
+    }]
+}

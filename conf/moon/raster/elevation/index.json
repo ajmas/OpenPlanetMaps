@@ -1,0 +1,21 @@
+{
+    "celestialBody": "The Moon",
+    "radius": "1738.1",
+    "orbitalParent": "Earth",
+    "name": "LRO LOLA Elevation Model",
+    "description": "",
+    "license": "public-domain",
+    "linkTo": "http://astrogeology.usgs.gov/search/map/Moon/LRO/LOLA/Lunar_LRO_LOLA_Global_LDEM_118m_Mar2014",
+    "author": "LOLA Science Team",
+    "updated": "2015-09-10",
+    "source": {
+        "descriptive": "http://astrogeology.usgs.gov/search/map/Moon/LRO/LOLA/Lunar_LRO_LOLA_Global_LDEM_118m_Mar2014",
+        "images": [{
+            "quality": "low",
+            "url": "http://astropedia.astrogeology.usgs.gov/download/Moon/LRO/LOLA/thumbs/Moon_LRO_LOLA_global_LDEM_1024.jpg"
+        }, {
+            "quality": "high",
+            "url": "http://planetarymaps.usgs.gov/mosaic/Lunar_LRO_LOLA_Global_LDEM_118m_Mar2014.cub"
+        }]
+    }
+}

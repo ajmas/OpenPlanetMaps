@@ -1,0 +1,23 @@
+{
+  "name": "openplanetmaps-installer",
+  "version": "1.0.0",
+  "description": "NodeJS based installer scripts for OpenPlanetMaps",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=6.7.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "child-process-promise": "^2.2.0",
+    "fs-extra": "^1.0.0",
+    "mkdirp": "^0.5.1",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1"
+  }
+}

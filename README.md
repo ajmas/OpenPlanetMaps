@@ -1,3 +1,7 @@
+![Open Planet Maps](public/img/logo.png)
+
+![Join the chat at https://gitter.im/OpenPlanetMaps/Lobby](https://badges.gitter.im/OpenPlanetMaps/Lobby.svg)](https://gitter.im/OpenPlanetMaps/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Open Planet Maps
 ================
 
@@ -15,3 +19,14 @@ content for distribution.
 
 This is still very much a work in progress and not ready for deployment.
 
+Installation
+------------
+
+Currently the idea is to run a NodeJS tool, located in the 'installation' directory to run through the configuration in the 'conf' folder and then merge that with the contents of the 'public' folder and place the results in a generate build folder, such that
+
+    build/   
+      - index.html   ...  Sample viewer, using LeafletJS
+      - css/         ...  CSS to support viewer
+      - img/         ...  images to support viewer
+      - js/          ...  Javascript to support viewer
+      - tiles/       ...  The tiles and the JSON data
