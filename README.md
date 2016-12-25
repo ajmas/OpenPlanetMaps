@@ -1,6 +1,6 @@
 ![Open Planet Maps](public/img/logo.png)
 
-![Join the chat at https://gitter.im/OpenPlanetMaps/Lobby](https://badges.gitter.im/OpenPlanetMaps/Lobby.svg)](https://gitter.im/OpenPlanetMaps/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/OpenPlanetMaps/Lobby](https://badges.gitter.im/OpenPlanetMaps/Lobby.svg)](https://gitter.im/OpenPlanetMaps/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Open Planet Maps
 ================
