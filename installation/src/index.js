@@ -1,6 +1,8 @@
 const fs = require('fs-extra');
 const request = require('request');
 const mkdirp = require('mkdirp');
+const winston = require('winston');
+
 const cub2Png = require('./cub-to-png');
 const tilesGenerator = require('./tiles-generator');
 
@@ -16,6 +18,14 @@ function isFileExists(filepath) {
     }
 }
 
+function isDirectoryExists(filepath) {
+    try {
+        return fs.statSync(filepath).isDirectory();
+    } catch (error) {
+        return false;
+    }
+}
+
 /**
  * Promise based function to fetch and store the data for the dataset
  */
@@ -23,6 +33,9 @@ function fetchData(url, writeToPath, overWrite) {
     var filename = url.substring(url.lastIndexOf('/') + 1, url.length);
     var path = `${writeToPath}/${filename}`;
 
+    if (filename.length > 255) {
+        throw new Error('name too long: ' + filename);
+    }
     return new Promise(function(resolve, reject) {
         if (!overWrite && isFileExists(path)) {
             return resolve(`${path}`);
@@ -37,8 +50,8 @@ function fetchData(url, writeToPath, overWrite) {
         request
             .get(url)
             // .on('response', function(response) {
-            //     console.log(response.statusCode) // 200 
-            //     console.log(response.headers['content-type']) // 'image/png' 
+            //     winston.debug(response.statusCode) // 200 
+            //     winston.debug(response.headers['content-type']) // 'image/png' 
             //         // reject(new Error('booom'));
             // })
             .on('error', function(err) {
@@ -68,12 +81,12 @@ function celestialObjects(path, callback) {
             fs.stat(celestialObjectInfoFile, function(error, stats) {
                 if (error) {
                     if (error.code === 'ENOENT') {
-                        console.log('warn', `no info for ${celestialObject}`);
+                        winston.debug('warn', `no info for ${celestialObject}`);
                     } else {
-                        console.log('error', error);
+                        winston.debug('error', error);
                     }
                 } else if (stats.isFile()) {
-                    console.log(`exists, info for ${celestialObject}`);
+                    winston.debug(`exists, info for ${celestialObject}`);
                     readJsonFile(celestialObjectInfoFile);
                 }
             });
@@ -92,7 +105,7 @@ function datasetTypes(path, celestialObject, callback) {
             }
 
             if (supportedDataTypes.indexOf(datasetType) > 0) {
-                //console.log(celestialObject, datasetType, childPath);
+                //winston.debug(celestialObject, datasetType, childPath);
                 datasets(childPath, celestialObject, datasetType, callback);
             }
         }
@@ -112,12 +125,12 @@ function datasets(path, celestialObject, datasetType, callback) {
             fs.stat(datasetFile, function(error, stats) {
                 if (error) {
                     if (error.code === 'ENOENT') {
-                        console.log('warn', `no dataset File for path ${datasetFile}`);
+                        winston.debug('warn', `no dataset File for path ${datasetFile}`);
                     } else {
-                        console.log('error', error);
+                        winston.debug('error', error);
                     }
                 } else if (stats.isFile()) {
-                    //console.log(`exists, info for ${celestialObject}/${datasetType}/${dataset}`);
+                    //winston.debug(`exists, info for ${celestialObject}/${datasetType}/${dataset}`);
                     callback(`${celestialObject}/${datasetType}/${dataset}`);
                     readJsonFile(datasetFile);
                 }
@@ -135,16 +148,25 @@ function loadConfig() {
     return readJsonFile(configPath);
 }
 
-function getImage(images, quality) {
+function getImage(images, quality, useCub) {
     var i, url;
     for (i = 0; i < images.length; i++) {
         if (!url) {
             url = images[i].url;
-        } else if (url && (quality && images[i].quality === quality)) {
+        } else if (url && (quality && images[i].quality === quality) && (url.endsWith('.cub') === useCub)) {
             url = images[i].url;
         }
     }
     return url;
+}
+
+function initLogger() {
+    winston.remove(winston.transports.Console);
+    winston.add(winston.transports.Console, {
+        level: 'debug',
+        silent: false,
+        colorize: true
+    });
 }
 
 // -------------------------------------------------
@@ -154,9 +176,19 @@ const config = loadConfig();
 
 const planetsDataPath = config.planetsDataPath;
 const outputPath = config.outputPath;
+const staticFilesPath = config.staticFilesPath;
+
+winston.remove(winston.transports.Console);
+winston.add(winston.transports.Console, {
+    level: 'debug',
+    silent: false,
+    colorize: true
+});
+
+fs.copySync(staticFilesPath, outputPath);
 
 celestialObjects(planetsDataPath, function(path) {
-    var destFolder = `${outputPath}/${path}`;
+    var destFolder = `${outputPath}/tiles/${path}`;
     if (!fs.existsSync(destFolder)) {
         mkdirp.sync(destFolder);
     };
@@ -170,7 +202,7 @@ celestialObjects(planetsDataPath, function(path) {
 
     fs.copySync(
         `${planetsDataPath}/${celestialObject}/index.json`,
-        `${outputPath}/${celestialObject}/index.json`
+        `${outputPath}/tiles/${celestialObject}/index.json`
     );
 
     var data = {
@@ -183,23 +215,31 @@ celestialObjects(planetsDataPath, function(path) {
         radius: planetInfo.equitorialRadius
     };
 
-    fs.writeFileSync(`${outputPath}/${path}/index.json`, JSON.stringify(data, undefined, 2), 'utf-8');
+    var outputFolder = `${outputPath}/tiles/${path}/`;
+    fs.mkdirsSync(outputFolder);
+    winston.debug('writing to: ', outputFolder);
+    fs.writeFileSync(`${outputFolder}/index.json`, JSON.stringify(data, undefined, 2), 'utf-8');
 
-    if (datasetType === "raster") {
-        const imageUrl = getImage(dataset.source.images, 'medium');
+    if (!isFileExists(`${outputPath}/tiles/${path}`)) {
+        console.log('generating: ' + `${path}`)
+        if (datasetType === "raster") {
+            const imageUrl = getImage(dataset.source.images, 'high', false);
 
-        fetchData(imageUrl, config.cachePath, false).then(function(imagePath) {
-            console.log(`finished downloading to ${path}`);
-            if (path.endsWith('.cub')) {
-                return cubToPng.convert(imagePath, "out.png");
-            } else {
-                return imagePath;
-            }
-        }).then(function(imagePath) {
-            console.log(`generateTiles: ${imagePath} --> ${outputPath}/${path}`);
-            return tilesGenerator.generateTiles(imagePath, `${outputPath}/${path}`, 0, 6, planetInfo.equitorialRadius);
-        }).catch(function(error) {
-            console.log(error);
-        });
+            fetchData(imageUrl, config.cachePath, false).then(function(imagePath) {
+                winston.debug(`finished downloading to ${path}`);
+                if (path.endsWith('.cub')) {
+                    return cubToPng.convert(imagePath, "out.png");
+                } else {
+                    return imagePath;
+                }
+            }).then(function(imagePath) {
+                winston.debug(`generateTiles: ${imagePath} --> ${outputPath}/tiles/${path}`);
+                return tilesGenerator.generateTiles(imagePath, `${outputPath}/tiles/${path}`, 0, 6, planetInfo.equitorialRadius);
+            }).then(function(result) {
+                winston.info(result);
+            }).catch(function(error) {
+                winston.error(error);
+            });
+        }
     }
 });

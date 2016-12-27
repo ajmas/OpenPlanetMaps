@@ -1,70 +1,35 @@
 <html>
 
 <head>
-   <title>OpenPlanetMaps</title>
- 
-   <!--
+    <title>OpenPlanetMaps</title>
+
+    <!--
    <script src="//rawgit.com/mapbox/mapbox-gl-leaflet/master/leaflet-mapbox-gl.js"></script>
    -->
-   
-   <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
-   <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
 
-   <link rel="stylesheet" href="css/main.css" />
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
 
-   <script type="text/javascript">
-      var map;
-      var baseLayer;
-      
-      function changeCelestialBody(bodyId) {
-          if (baseLayer) {
-              map.removeLayer(baseLayer);
-          }
-          
-          baseLayer = L.tileLayer('tiles/{id}/{z}/{x}/{y}.jpg', {
-              attribution: 'Map data Public Domain <a href="http://astrogeology.usgs.gov/maps/mdim-2-1">USGS Astrogeology Science Center</a>',
-              maxZoom: 18,
-              id: bodyId
-            });
-            
-          baseLayer.addTo(map);    
-          
-          // TODO recenter  
-      }
-      
-      $(document).ready(function (){
-          map = L.map('map').setView([0, 0], 0);
-          
-          $('select[name=celestialbody]').change(function (event) {
-               var value = $('select[name=celestialbody] option:selected').val();
-               changeCelestialBody(value);
-          });
-          
-          var value = $('select[name=celestialbody] option:selected').val()
-          changeCelestialBody(value);
-      });
-   </script>
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css" />
 
+    <script type="text/javascript"></script>
 
-   <style type="text/css">
+    <style type="text/css">
 
-   </style>
+    </style>
 
 </head>
 
 <body>
 
-<div id="topnav"> <label>Celestial Body:</label> <select name="celestialbody">
-   <option value="earth">Earth</option>
-   <option value="mars">Mars</option>
-   <option value="mercury">Mercury</option>
-   <option value="moon">The Moon</option>   
-   <option value="venus">Venus</option>
-   </select>
-   <a href="/"><img src="img/logo.png" id="logo"></a>
-   </div>
+    <div id="topnav"> <label>Celestial Body:</label>
+        <select name="celestialbody"></select>
+        <a href="/"><img src="img/logo.png" id="logo"></a>
+    </div>
 
-<div id="map"></div>
+    <div id="map"></div>
 </body>
+
 </html>

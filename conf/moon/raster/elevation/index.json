@@ -1,12 +1,11 @@
 {
-    "celestialBody": "The Moon",
-    "radius": "1738.1",
-    "orbitalParent": "Earth",
     "name": "LRO LOLA Elevation Model",
-    "description": "",
+    "celestialBody": "The Moon",
+    "description": "LRO LOLA Elevation Model 118m (LDEM GDR)",
     "license": "public-domain",
     "linkTo": "http://astrogeology.usgs.gov/search/map/Moon/LRO/LOLA/Lunar_LRO_LOLA_Global_LDEM_118m_Mar2014",
     "author": "LOLA Science Team",
+    "credit": "LOLA Science Team",
     "updated": "2015-09-10",
     "source": {
         "descriptive": "http://astrogeology.usgs.gov/search/map/Moon/LRO/LOLA/Lunar_LRO_LOLA_Global_LDEM_118m_Mar2014",

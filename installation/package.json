@@ -18,6 +18,7 @@
     "fs-extra": "^1.0.0",
     "mkdirp": "^0.5.1",
     "request": "^2.79.0",
-    "request-promise": "^4.1.1"
+    "request-promise": "^4.1.1",
+    "winston": "^2.3.0"
   }
 }

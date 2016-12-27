@@ -2,19 +2,18 @@ const fs = require('fs');
 const childProcess = require('child_process');
 const exec = require('child-process-promise').exec;
 const promise = require('bluebird');
+const winston = require('winston');
 
-function isFileExists(filepath) {
+function isDirectoryExists(filepath) {
     try {
-        return fs.statSync(filepath).isFile();
+        return fs.statSync(filepath).isDirectory();
     } catch (error) {
         return false;
     }
 }
 
-
 function mkdirIfMissing(path) {
-    // TODO differentiate between already existing and other exceptions
-    if (isFileExists(path)) {
+    if (!isDirectoryExists(path)) {
         fs.mkdirSync(path);
     }
 }
@@ -30,16 +29,18 @@ function generateTiles(inputFile, outputdir, minZoom, maxZoom, planetRadiusKm) {
         const height = width;
         const planetWidthKm = planetRadiusKm * Math.PI * 2;
         const metresPerPixel = (planetWidthKm * 1000) / width;
+
         mkdirIfMissing(`${outputdir}/${z}`);
 
-        console.log(`Generating tiles for zoom level ${zoomLevel}`);
-        console.log(`    meters/pixel: ${metresPerPixel}`);
+        winston.debug(`Generating tiles for zoom level ${zoomLevel}`);
+        winston.debug(`    meters/pixel: ${metresPerPixel}`);
 
         sequence = sequence.then(function(zoom) {
             return exec(`convert "${inputFile}" -resize ${width}x${height}\! -crop 256x256 -set filename:tile "%[fx:page.x/256+1]-%[fx:page.y/256+1]" +repage +adjoin "${outputdir}/${zoomLevel}/%[filename:tile].jpg"`).then(function(z, result) {
                 let x, y;
                 const tilesPerSide = Math.pow(2, zoomLevel);
                 for (x = 0; x < tilesPerSide; x++) {
+                    winston.warn('!!', `${outputdir}/${zoomLevel}/${x}`);
                     fs.mkdirSync(`${outputdir}/${zoomLevel}/${x}`);
                     for (y = 0; y < tilesPerSide; y++) {
                         fs.renameSync(`${outputdir}/${zoomLevel}/${(x+1)}-${(y+1)}.jpg`, `${outputdir}/${zoomLevel}/${x}/${y}.jpg`);
@@ -50,7 +51,7 @@ function generateTiles(inputFile, outputdir, minZoom, maxZoom, planetRadiusKm) {
     }
 
     sequence.catch(function(error) {
-        console.log('error', error);
+        winston.debug('error', error);
     });
 
 

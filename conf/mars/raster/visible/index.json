@@ -1,5 +1,6 @@
 {
-    "name": "",
+    "name": "Visible",
+    "celestialBody": "Mars",
     "description": "",
     "license": "public-domain",
     "linkTo": "http://astrogeology.usgs.gov/maps/mdim-2-1",

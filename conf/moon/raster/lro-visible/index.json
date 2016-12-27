@@ -1,16 +1,12 @@
 {
-    "name": "The Moon (visible)",
-    "description": "",
+    "name": "LRO Visible",
+    "celestialBody": "The Moon",
+    "description": "LRO LROC-WAC Global Mosaic 100m June 2013.",
     "license": "Public Domain",
     "linkTo": "http://astrogeology.usgs.gov/",
     "author": "USGS Astrogeology Science Center",
     "credit": "USGS Astrogeology Science Center",
     "updated": "2015-09-19",
-    "orbitalbody": {
-        "orbital-parent": "earth",
-        "type": "moon",
-        "radius": 1738100
-    },
     "source": {
         "descriptive": "http://astrogeology.usgs.gov/search/map/Moon/LRO/LROC_WAC/Lunar_LRO_LROC-WAC_Mosaic_global_100m_June2013",
         "images": [{
@@ -21,7 +17,7 @@
             "url": "https://astropedia.astrogeology.usgs.gov/downloadBig/Moon/LRO/LROC_WAC/ancillary/LRO_WAC_Mosaic_Global_303ppd_v3.jp2"
         }, {
             "quality": "high",
-            "url": "http://planetarymaps.usgs.gov/mosaic/Lunar_LRO_LROC-WAC_Mosaic_global_100m_June2013.cub"
+            "url": "https://astropedia.astrogeology.usgs.gov/downloadBig/Moon/LRO/LROC_WAC/ancillary/LRO_WAC_Mosaic_Global_303ppd_v3.tif"
         }]
     }
 }

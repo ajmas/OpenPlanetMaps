@@ -5,28 +5,35 @@
 Open Planet Maps
 ================
 
-The current aim of the project is to build a map server dedicated to providing map
-layers for the surfaces of known astral bodies, such as the sun, the planets and
-the various non-man made satellites. 
+The current aim of the project is to build a map server dedicated to
+providing map layers for the surfaces of known astral bodies, such as
+the Sun, the planets and the various non-man-made satellites. 
 
-The data the project depends on should be of an open nature, whether that is public
-domain, creative commons or an alternative license that allows use in a non-commercial
-context.
+The data the project depends on should be of an open nature, whether
+that is public domain, creative commons or an alternative license that
+allows use in a non-commercial context.
 
-The current design assumption of the project is to provide a collection of JSON files that indicate the location of the source map data, along suitable metadata and then
-have a script that fetches the source map data and then via a script prepare the
-content for distribution.
+The current design assumption of the project is to provide a collection
+of JSON files that indicate the location of the source map data, along
+suitable metadata and then have a script that fetches the source map
+data and then via a script prepare the content for distribution.
 
 This is still very much a work in progress and not ready for deployment.
 
 Installation
 ------------
 
-Currently the idea is to run a NodeJS tool, located in the 'installation' directory to run through the configuration in the 'conf' folder and then merge that with the contents of the 'public' folder and place the results in a generate build folder, such that
+Follow the steps in the [Read Me](installation/README.md), int the installer
+folder. This will result in a folder containing the basic viewer and the
+generated tiles. This will take some time, as the source files can be large.
 
-    build/   
-      - index.html   ...  Sample viewer, using LeafletJS
-      - css/         ...  CSS to support viewer
-      - img/         ...  images to support viewer
-      - js/          ...  Javascript to support viewer
-      - tiles/       ...  The tiles and the JSON data
+Contribution & Collaboration
+----------------------------
+
+This is a project that is being done in available time and is not sponsored.
+If you would like to contribute or collaborate in any way, then the best place
+to start is on the OpenPlanetMaps channel on Gitter.
+
+You should note that I am not a cartographer, so everything up to here is based
+on a best effort, as I have researched things on the net. There is is certainly
+plenty of ways in which this can be improved. 
