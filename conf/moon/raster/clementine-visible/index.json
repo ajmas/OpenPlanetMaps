@@ -1,0 +1,21 @@
+{
+    "name": "Clementine Visible",
+    "celestialBody": "The Moon",
+    "description": "LRO LROC-WAC Global Mosaic 100m June 2013.",
+    "license": "Public Domain",
+    "linkTo": "https://astrogeology.usgs.gov/search/map/Moon/Clementine/UVVIS/Lunar_Clementine_UVVIS_750nm_Global_Mosaic_118m_v2",
+    "author": "USGS Astrogeology Science Center",
+    "credit": "USGS Astrogeology Science Center",
+    "updated": "2015-09-19",
+    "baseLayer": true,
+    "source": {
+        "descriptive": "https://astrogeology.usgs.gov/search/map/Moon/Clementine/UVVIS/Lunar_Clementine_UVVIS_750nm_Global_Mosaic_118m_v2",
+        "images": [{
+            "quality": "low",
+            "url": "https://astropedia.astrogeology.usgs.gov/download/Moon/Clementine/UVVIS/thumbs/Lunar_Clementine_UVVIS_750nm_Global_Mosaic_1024.jpg"
+        }, {
+            "quality": "xhigh",
+            "url": "https://astropedia.astrogeology.usgs.gov/download/Moon/Clementine/UVVIS/ancillary/Clem_UVVIS_Mosaic_Global_256ppd_v2.jp2"
+        }]
+    }
+}

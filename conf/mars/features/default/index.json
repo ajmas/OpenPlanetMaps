@@ -1,12 +1,13 @@
 {
-   "name": "",
-   "description": "",   
-   "license": "public-domain",
-   "linkTo": "http://planetarynames.wr.usgs.gov/",
-   "author": "IAU, USGS Astrogeology Science Center, NASA ",
-   "source": {
-      "descriptive": "http://planetarynames.wr.usgs.gov/",
-      "features": [{
-         "url": "http://planetarynames.wr.usgs.gov/shapefiles/MARS_nomenclature.kmz"
-      }]   
-}
+    "name": "",
+    "celestialBody": "Mars",
+    "description": "",
+    "license": "public-domain",
+    "linkTo": "http://planetarynames.wr.usgs.gov/",
+    "author": "IAU, USGS Astrogeology Science Center, NASA ",
+    "source": {
+        "descriptive": "http://planetarynames.wr.usgs.gov/",
+        "features": [{
+            "url": "http://planetarynames.wr.usgs.gov/shapefiles/MARS_nomenclature.kmz"
+        }]
+    }
