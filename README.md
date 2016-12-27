@@ -5,6 +5,8 @@
 Open Planet Maps
 ================
 
+[![Join the chat at https://gitter.im/OpenPlanetMaps/Lobby](https://badges.gitter.im/OpenPlanetMaps/Lobby.svg)](https://gitter.im/OpenPlanetMaps/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 The current aim of the project is to build a map server dedicated to providing map
 layers for the surfaces of known astral bodies, such as the sun, the planets and
 the various non-man made satellites. 
