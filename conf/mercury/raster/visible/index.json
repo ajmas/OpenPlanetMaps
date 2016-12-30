@@ -1,0 +1,17 @@
+{
+    "name": "Visible",
+    "celestialBody": "Mercury",
+    "description": "",
+    "license": "public-domain",
+    "linkTo": "http://astrogeology.usgs.gov/",
+    "author": "USGS Astrogeology Science Center",
+    "credit": "USGS Astrogeology Science Center",
+    "updated": "2016-04-19",
+    "source": {
+        "descriptive": "https://astrogeology.usgs.gov/search/map/Mercury/Messenger/Global/Mercury_MESSENGER_MDIS_Basemap_BDR_Mosaic_Global_166m",
+        "images": [{
+            "quality": "high",
+            "url": "https://astropedia.astrogeology.usgs.gov/downloadBig/Mercury/Messenger/Global/Mercury_MESSENGER_MDIS_Basemap_BDR_Mosaic_Global_166m.cub"
+        }]
+    }
+}
