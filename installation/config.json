@@ -1,6 +1,6 @@
 {
     "planetsDataPath": "../conf",
     "staticFilesPath": "../public",
-    "outputPath": "build",
-    "cachePath": "cache"
+    "outputPath": "/Volumes/Flexigo Bravo/OpenPlanetMaps/build",
+    "cachePath": "/Volumes/Flexigo Bravo/OpenPlanetMaps/cache"
 }

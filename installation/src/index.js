@@ -1,12 +1,17 @@
 const fs = require('fs-extra');
+const path = require('path');
+
 const request = require('request');
 const mkdirp = require('mkdirp');
 const winston = require('winston');
 
-const cub2Png = require('./cub-to-png');
+const convertCub = require('./convert-cub');
+const convertCSV = require('./convert-csv');
 const tilesGenerator = require('./tiles-generator');
 
-const configPath = './config.json';
+const config = require('../config.json');
+const url = require('url');
+
 const supportedDataTypes = ['feature', 'raster', 'vector'];
 const ignoredFiles = ['.DS_Store'];
 
@@ -27,15 +32,42 @@ function isDirectoryExists(filepath) {
 }
 
 /**
- * Promise based function to fetch and store the data for the dataset
+ * Used to ensure fileFolderPath is absolute, providing support for
+ * relative paths to either be relative to application or working directory.
+ * 
  */
-function fetchData(url, writeToPath, overWrite) {
-    var filename = url.substring(url.lastIndexOf('/') + 1, url.length);
+function absolutePath(fileFolderPath, relativeToApp) {
+    if (!fileFolderPath.startsWith('/')) {
+        if (relativeToApp) {
+            return path.resolve([__dirname, '..', fileFolderPath].join('/'));
+        } else {
+            return path.resolve(fileFolderPath);
+        }
+    }
+    return fileFolderPath;
+}
+
+/**
+ * Promise based function to fetch and store the data for the dataset.
+ * If file already exists it won't be fetched, unless overWrite is 'true'.
+ */
+function fetchData(dataUrl, writeToPath, overWrite) {
+
+    if (dataUrl.startsWith('/')) {
+        return Promise.resolve(dataUrl);
+    }
+
+    var filename = dataUrl.substring(dataUrl.lastIndexOf('/') + 1, dataUrl.length);
     var path = `${writeToPath}/${filename}`;
+
+    if (overWrite === undefined) {
+        overWrite = false;
+    }
 
     if (filename.length > 255) {
         throw new Error('name too long: ' + filename);
     }
+
     return new Promise(function(resolve, reject) {
         if (!overWrite && isFileExists(path)) {
             return resolve(`${path}`);
@@ -48,12 +80,7 @@ function fetchData(url, writeToPath, overWrite) {
         });
 
         request
-            .get(url)
-            // .on('response', function(response) {
-            //     winston.debug(response.statusCode) // 200 
-            //     winston.debug(response.headers['content-type']) // 'image/png' 
-            //         // reject(new Error('booom'));
-            // })
+            .get(dataUrl)
             .on('error', function(err) {
                 reject(error);
             })
@@ -139,14 +166,12 @@ function datasets(path, celestialObject, datasetType, callback) {
     });
 }
 
-function readJsonFile(path) {
-    const rawConfig = fs.readFileSync(path);
+function readJsonFile(filePath) {
+    const fullFilePath = path.resolve(filePath);
+    const rawConfig = fs.readFileSync(fullFilePath);
     return JSON.parse(rawConfig);
 }
 
-function loadConfig() {
-    return readJsonFile(configPath);
-}
 
 function getImage(images, quality, useCub) {
     var i, url;
@@ -169,25 +194,64 @@ function initLogger() {
     });
 }
 
-// -------------------------------------------------
-// -------------------------------------------------
+function processRaster(dataset, path, planetInfo) {
+    const imageUrl = getImage(dataset.source.images, 'high', false);
 
-const config = loadConfig();
+    // Minimize download & conversion where possible:
+    //  - If file not in cache, fetch
+    //  - If file needs converting and output not in cache, convert
+    //  - If tiles not present, generate
 
-const planetsDataPath = config.planetsDataPath;
-const outputPath = config.outputPath;
-const staticFilesPath = config.staticFilesPath;
+    // Attempt to fetch the file, but don't overwrite if it already exists
+    return fetchData(imageUrl, config.cachePath, false).then(function(imagePath) {
+        winston.debug(`finished downloading to ${imagePath}`);
+        if (imagePath.endsWith('.cub')) {
+            // Attempt to convert the file, unless the output file already exists
+            var outputFileName = path.replace(/[ \/]/g, '-') + '.png';
+            var outputFilePath = [config.cachePath, outputFileName].join('/');
+            winston.debug(`outputFilePath: ${outputFilePath}`);
+            if (!isFileExists(outputFilePath)) {
+                return convertCub.toPNG(
+                    imagePath, outputFilePath
+                );
+            } else {
+                return outputFilePath;
+            }
+        } else {
+            return imagePath;
+        }
+    }).then(function(imagePath) {
+        winston.debug(`generateTiles: ${imagePath} --> ${outputPath}/tiles/${path}`);
+        return tilesGenerator.generateTiles(imagePath, `${outputPath}/tiles/${path}`, 0, -1, planetInfo.equitorialRadius, regenerateTiles);
+    }).then(function(result) {
+        winston.info(result);
+    }).catch(function(error) {
+        winston.error(error);
+    });
+}
 
-winston.remove(winston.transports.Console);
-winston.add(winston.transports.Console, {
-    level: 'debug',
-    silent: false,
-    colorize: true
-});
+function processFeatures(dataset, datasetFolder, path, planetInfo) {
+    var datafile = dataset.source.data;
+    console.log('url.parse(datafile).protocol:', url.parse(datafile).protocol)
+    if (url.parse(datafile).protocol === null) {
+        datafile = [datasetFolder, datafile].join('/');
+    }
+    console.log('datafile:', datafile)
+    return fetchData(datafile, config.cachePath, false).then(function(filePath) {
+        console.log('zzz', filePath)
+        const folder = `${outputPath}/tiles/${path}`;
+        return convertCSV.toGeoJson(filePath, [folder, 'features.geojson'].join('/')).then(function(geojson) {
+            // console.log(geojson);
+        });
+    }).catch(function(error) {
+        winston.error(error);
+    });
+}
 
-fs.copySync(staticFilesPath, outputPath);
+function processCelestialObject(path, regenerateTiles) {
+    const planetsDataPath = absolutePath(config.planetsDataPath, true);
+    const outputPath = absolutePath(config.outputPath, true);
 
-celestialObjects(planetsDataPath, function(path) {
     var destFolder = `${outputPath}/tiles/${path}`;
     if (!fs.existsSync(destFolder)) {
         mkdirp.sync(destFolder);
@@ -222,24 +286,38 @@ celestialObjects(planetsDataPath, function(path) {
 
     if (!isFileExists(`${outputPath}/tiles/${path}`)) {
         console.log('generating: ' + `${path}`)
-        if (datasetType === "raster") {
-            const imageUrl = getImage(dataset.source.images, 'high', false);
 
-            fetchData(imageUrl, config.cachePath, false).then(function(imagePath) {
-                winston.debug(`finished downloading to ${path}`);
-                if (path.endsWith('.cub')) {
-                    return cubToPng.convert(imagePath, "out.png");
-                } else {
-                    return imagePath;
-                }
-            }).then(function(imagePath) {
-                winston.debug(`generateTiles: ${imagePath} --> ${outputPath}/tiles/${path}`);
-                return tilesGenerator.generateTiles(imagePath, `${outputPath}/tiles/${path}`, 0, 6, planetInfo.equitorialRadius);
-            }).then(function(result) {
-                winston.info(result);
-            }).catch(function(error) {
-                winston.error(error);
-            });
+        if (datasetType === "raster") {
+            processRaster(dataset, path, planetInfo);
+        } else if (datasetType === "features") {
+            processFeatures(dataset, `${planetsDataPath}/${path}`, path, planetInfo);
+        } else {
+            winston.debug(`unsupported dataset type: ${datasetType}`);
         }
     }
+}
+
+// -------------------------------------------------
+// -------------------------------------------------
+
+const planetsDataPath = absolutePath(config.planetsDataPath, true);
+const outputPath = absolutePath(config.outputPath, true);
+const staticFilesPath = absolutePath(config.staticFilesPath, true);
+
+var regenerateTiles = false;
+
+winston.remove(winston.transports.Console);
+winston.add(winston.transports.Console, {
+    level: 'debug',
+    silent: false,
+    colorize: true
 });
+
+// console.log('__filename', path.resolve([__dirname, '../public'].join('/')));
+winston.debug(`Copying ${staticFilesPath} to ${outputPath}`);
+
+// fs.copySync(staticFilesPath, outputPath);
+
+// processCelestialObject('venus/raster/visible', regenerateTiles);
+processCelestialObject('moon/features/geological', regenerateTiles);
+//celestialObjects(planetsDataPath, processCelestialObject);

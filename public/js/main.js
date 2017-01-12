@@ -18,6 +18,50 @@ function clearLayers() {
     });
 }
 
+function renderPopup(properties) {
+    var html = '';
+    html += '<div style="font-weight:bold">' + properties.name + '</div>';
+    html += '<ul>';
+    html += '<li>type: ' + properties.type + '</li>';
+    if (properties.link) {
+        html += '<li><a href="' + properties.link + '">details</a></li>';
+    }
+    html += '</ul>';
+    return html;
+}
+
+function loadFeatures(celestialBody, layerDetails) {
+    console.log(tilesPath + celestialBody + '/' + layerDetails.path + '/features.geojson')
+    $.getJSON(tilesPath + celestialBody + '/' + layerDetails.path + '/features.geojson', function(data) {
+        // console.log(data);
+
+        var labelMarkerOptions = {
+            opacity: 1,
+            fillOpacity: 0
+        };
+
+        overlayMaps[layerDetails.name] = L.geoJSON(data, {
+            pointToLayer: function(feature, latlng) {
+                // return L.Marker(latlng, labelMarkerOptions); //.bindLabel(feature.properties.Name, { noHide: true });
+                return L.circleMarker(latlng, labelMarkerOptions);
+            },
+            onEachFeature: function(feature, layer) {
+                // does this feature have a property named popupContent?
+                if (feature.properties && feature.properties.name) {
+                    layer.bindPopup(renderPopup(feature.properties));
+                }
+            }
+        });
+        overlayMaps[layerDetails.name].addTo(map);
+
+        if (layerControl) {
+            map.removeControl(layerControl);
+        }
+        layerControl = L.control.layers(baseMaps, overlayMaps);
+        layerControl.addTo(map);
+    });
+}
+
 function loadCelestialBodyData(celestialBody) {
     clearLayers();
 
@@ -33,11 +77,21 @@ function loadCelestialBodyData(celestialBody) {
                     mapPath: layers[i].path
                 });
                 baseMaps[layers[i].name].addTo(map);
+            } else {
+                if (layers[i].type === 'features') {
+                    loadFeatures(celestialBody, layers[i]);
+                }
             }
         }
+
+        var latLonLines = L.graticule().addTo(map);
+        //L.graticule({ interval: 20 }).addTo(map);
+        overlayMaps['lat-lon lines'] = latLonLines;
+
         layerControl = L.control.layers(baseMaps, overlayMaps);
         layerControl.addTo(map);
         map.setZoom(0);
+
     })
 }
 

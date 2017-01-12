@@ -10,6 +10,9 @@
     "source": {
         "descriptive": "https://astrogeology.usgs.gov/search/map/Mercury/Messenger/Global/Mercury_MESSENGER_MDIS_Basemap_BDR_Mosaic_Global_166m",
         "images": [{
+            "quality": "medium",
+            "url": "https://astropedia.astrogeology.usgs.gov/download/Mercury/Messenger/Global/thumbs/Mercury_MESSENGER_MDIS_Basemap_BDR_Mosaic_Global_32ppd.jpg"
+        }, {
             "quality": "high",
             "url": "https://astropedia.astrogeology.usgs.gov/downloadBig/Mercury/Messenger/Global/Mercury_MESSENGER_MDIS_Basemap_BDR_Mosaic_Global_166m.cub"
         }]

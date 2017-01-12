@@ -15,10 +15,18 @@
   "dependencies": {
     "bluebird": "^3.4.6",
     "child-process-promise": "^2.2.0",
+    "fast-csv": "^2.3.0",
     "fs-extra": "^1.0.0",
+    "gps-babel": "^0.1.0",
+    "image-size": "^0.5.1",
     "mkdirp": "^0.5.1",
     "request": "^2.79.0",
     "request-promise": "^4.1.1",
-    "winston": "^2.3.0"
+    "tmp": "0.0.31",
+    "togeojson": "^0.16.0",
+    "unzip": "^0.1.11",
+    "username": "^2.2.2",
+    "winston": "^2.3.0",
+    "xmldom": "^0.1.27"
   }
 }
