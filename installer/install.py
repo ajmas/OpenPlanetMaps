@@ -7,7 +7,28 @@ import requests
 import json
 import os
 
+"""
+This installer script takes care of going through the configuration
+and downloading the assets as needed. For raster images they are
+converted to tiles.
 
+The general flow:
+  - Create build folder
+  - Copy base resources to build folder
+  - Process celestial bodies
+    - Creates destination folders
+    - Create index file, copying in metadata as necessary
+  - Process dataset types
+    - Creates destination folders
+    - Create index file, copying in metadata as necessary   
+  - Process datasets
+    - Creates destination folders  
+    - Create index file, copying in metadata as necessary
+    - Process artifcats
+      - Download (or fetch from cache)
+      - Convert
+
+"""
 # import curses
 
 # from stat import *
