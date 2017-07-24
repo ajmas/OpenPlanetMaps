@@ -7,32 +7,91 @@
        body {
           background-color: #fff;
        }
-       
-       #branding {
+
+       .project-logo {
           margin: 0 auto;
-          text-align: center;  
-          top:100px;
-          position: absolute; 
-          left: 0;
-          right: 0;        
+       
        }
        
-       #branding div {
-          margin-top: 40px;
-          font-family: Verdana, Geneva, sans-serif;
-          color: #333;
-          font-size: 48px;
+       #intro {
+          margin: 0 auto;
+          text-align: justify;
        }
        
+       .give-me-space {
+          margin: 20px;
+       }
+       
+       .logo {
+          width: 82px;
+          display: inline-block;
+          margin: 20px;
+          vertical-align: middle;
+       }       
+
+       
+       .link-block {
+          display: inline-block;   
+          margin-bottom: 50px;
+    
+       }
+       
+       .link-block.span {
+       
+       }
+       
+       .link-block span {
+           display: block;
+       }
+       
+       
+       main  {
+           margin: 20px auto 50px auto;
+           max-width: 600px;
+           font-family: Verdana, Geneva, sans-serif;
+           color: #333;    
+                  
+       }
+       
+       .related {
+           text-align: center;
+       }
+              
    </style>
 </head>
 
 <body>
 
-    <div id="branding">
-    <img src="logo.png" alt="OpenPlanetMaps"/>
-    <div>Coming soon...</div>
+    <main>
+    <img src="img/logo.png" alt="OpenPlanetMaps" class="project-logo"/>
+    
+    <div id="intro">
+        <p>The current aim of the project is to build a map server dedicated to providing
+           map layers for the surfaces of known astral bodies, such as the Sun, the planets
+           and the various non-man-made satellites.</p>
+
+        <p>The data the project depends on should be of an open nature, whether that is
+           public domain, creative commons or an alternative license that allows use in a
+           non-commercial context.</p>
+
+        <p>The current design assumption of the project is to provide a collection of JSON
+           files that indicate the location of the source map data, along suitable metadata
+           and then have a script that fetches the source map data and then via a script
+           prepare the content for distribution.</p>
+
+        <p>This is still very much a work in progress and not ready for deployment, though
+           if you want to take a peek at the work in progress, you can take a look at the
+           <a href="http:/alpha.openplanetmaps.org">dev server</a>, which should be
+           treated as highly unstable and more of a experimental lab.</p>
     </div>
+
+    <div class="related">
+    <div class="link-block"><a href="https://gitter.im/OpenPlanetMaps"><img src="img/gitter.svg" class="logo gitter" title="Gitter"/></a><span>Discuss</span></div>
+    <div class="link-block"><a href="https://github.com/ajmas/OpenPlanetMaps"><img src="img/github.svg" class="logo github" title="GitHub"/></a> <span>Contribute</span></div>
+    </div>
+    
+    </main>
+    
 </body>
 </html>
 
