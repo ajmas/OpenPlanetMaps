@@ -15,6 +15,9 @@
     "source": {
         "descriptive": "http://photojournal.jpl.nasa.gov/catalog/PIA18438",
         "images": [{
+            "quality": "medium",
+            "url": "https://photojournal.jpl.nasa.gov/jpeg/PIA18438.jpg"
+        }, {
             "quality": "high",
             "url": "http://photojournal.jpl.nasa.gov/tiff/PIA18438.tif"
         }]

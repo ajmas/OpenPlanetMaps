@@ -4,7 +4,7 @@
     "satellites": [],
     "description": "",
     "equitorialRadius": 1738.1,
-    "layers": [{
-        "path": "raster/elevation"
-    }]
+    "references": {
+        "wikipedia": "https://en.wikipedia.org/wiki/Moon"
+    }
 }

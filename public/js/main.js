@@ -1,11 +1,12 @@
-var tilesPath = 'tiles/';
-var indexJson = 'tiles/index.json';
+var tilesPath = './tiles/';
+var indexJson = './tiles/index.json';
 
 var map;
 var baseLayer;
 var baseMaps = {};
 var overlayMaps = {};
 var layerControl;
+var celestialBodiesById;
 
 function clearLayers() {
     baseMaps = {};
@@ -20,13 +21,13 @@ function clearLayers() {
 
 function loadCelestialBodyData(celestialBody) {
     clearLayers();
-
+    console.log('celestialBody', celestialBody);
     $.getJSON(tilesPath + celestialBody + '/index.json', function(data) {
         var i;
         var layers = data.layers;
         for (i = 0; i < layers.length; i++) {
             if (layers[i].base) {
-                baseMaps[layers[i].name] = L.tileLayer('tiles/{id}/{mapPath}/{z}/{x}/{y}.jpg', {
+                baseMaps[layers[i].name] = L.tileLayer(tilesPath + '{id}/{mapPath}/{z}/{x}/{y}.jpg', {
                     attribution: 'Map data ' + layers[i].license + ' <a href="' + layers[i].href + '">' + layers[i].author + '</a>',
                     maxZoom: 18,
                     id: celestialBody,
@@ -41,19 +42,42 @@ function loadCelestialBodyData(celestialBody) {
     })
 }
 
+function onClick(event) {
+   
+    if (event.target.localName !== 'span') {
+        return
+    }
+    var id = event.target.parentNode.id;
+    var celestialBody = celestialBodiesById[id];
+    $('.navbar-nav li').removeClass('active');
+    $('#' + id).addClass('active');
+    changeCelestialBody(celestialBody.path)
+}
+
 function initCelestialBodies() {
     $.getJSON(indexJson, function(data) {
         var options = '';
         var i;
 
+        console.log('data', data);
         if (data) {
-            for (i = 0; i < data.length; i++) {
-                options += '<option value="' + data[i].path + '">' + data[i].name + '</option>';
+            celestialBodies = data;
+            celestialBodiesById = {};
+            var entries = celestialBodies;
+            for (i = 0; i < entries.length; i++) {
+                if (!entries[i].id) {
+                    entries[i].id = 'nav-entry-' + i;
+                }
+                celestialBodiesById[entries[i].id] = entries[i];
+                options += '<li class="nav-item ' + entries[i].id + '" id="' + entries[i].id + '"><span>' + entries[i].name + '</span></li>';
             }
-            $('select[name=celestialbody]').html(options);
+            console.log(options);
+            $('.navbar-nav').html(options);
+            $('.navbar-nav li').eq(0).addClass('active');
+            
+            $('.navbar-nav > li > span').on('click', onClick);
 
-            var value = $('select[name=celestialbody] option:selected').val()
-            changeCelestialBody(value);
+            changeCelestialBody(entries[0].path);
         }
     });
 }

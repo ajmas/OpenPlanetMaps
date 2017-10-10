@@ -1,9 +1,9 @@
 {
-    "name": "mars",
+    "name": "Mars",
     "satelliteOf": "sun",
     "description": "",
     "equitorialRadius": 3396.2,
-    "layers": [{
-        "path": "raster/satellite"
-    }]
+    "references": {
+        "Wikipedia": "https://en.wikipedia.org/wiki/Mars"
+    }
 }
