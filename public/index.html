@@ -3,11 +3,13 @@
 <head>
     <title>OpenPlanetMaps</title>
 
-    <!--
-   <script src="//rawgit.com/mapbox/mapbox-gl-leaflet/master/leaflet-mapbox-gl.js"></script>
-   -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="lib/bootstrap-4.0.0-beta/css/bootstrap.min.css" />
+
+    <script src="./lib/jquery-3.1.1/jquery-3.1.1.min.js"></script>
+    <script src="./lib/popper.es5.min.js"></script>
+    <script src="./lib/bootstrap-4.0.0-beta/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
 
@@ -24,10 +26,18 @@
 
 <body>
 
-    <div id="topnav"> <label>Celestial Body:</label>
-        <select name="celestialbody"></select>
-        <a href="/"><img src="img/logo.png" id="logo"></a>
-    </div>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-faded">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+        <a class="navbar-brand" href="#"><a href="http://openplanetmaps.org"><img src="./img/logo.png" id="logo"></a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+            </ul>
+        </div>
+    </nav>
 
     <div id="map"></div>
 </body>

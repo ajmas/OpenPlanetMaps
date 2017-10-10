@@ -1,0 +1,6 @@
+{
+    "celestialDataPath": "../conf",
+    "staticAssetsPath": "../public",
+    "outputPath": "../build",
+    "cachePath": "../cache"
+}

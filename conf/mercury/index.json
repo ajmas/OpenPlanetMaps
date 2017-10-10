@@ -6,6 +6,7 @@
     "equitorialRadius": 1738.1,
     "layers": [],
     "references": {
-        "IAU": "https://planetarynames.wr.usgs.gov/Page/MERCURY/target"
+        "IAU": "https://planetarynames.wr.usgs.gov/Page/MERCURY/target",
+        "Wikipedia": "https://en.wikipedia.org/wiki/Mars"
     }
 }

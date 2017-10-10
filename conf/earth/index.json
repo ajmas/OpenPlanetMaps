@@ -4,7 +4,7 @@
     "satellites": [],
     "description": "",
     "equitorialRadius": 6378.137,
-    "layers": [{
-        "path": "raster/blueearth"
-    }]
+    "references": {
+        "Wikipedia": "https://en.wikipedia.org/wiki/Earth"
+    }
 }
