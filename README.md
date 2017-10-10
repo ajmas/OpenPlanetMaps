@@ -5,6 +5,8 @@
 Open Planet Maps
 ================
 
+The project should be treated as being in an alpha state.
+
 The current aim of the project is to build a map server dedicated to
 providing map layers for the surfaces of known astral bodies, such as
 the Sun, the planets and the various non-man-made satellites. 
@@ -23,8 +25,18 @@ This is still very much a work in progress and not ready for deployment.
 Installation
 ------------
 
-Follow the steps in the [Read Me](installation/README.md), int the installer
-folder. This will result in a folder containing the basic viewer and the
+Requirements:
+
+  - Python
+    - provides the execution environment
+  - Imagemagick
+    - provides convert command, used by `tile_generator.py`
+  - GDAL
+    - provides ogr2ogr, used by `kmz2geojson.py`
+
+You'll need to run the installer/install.py Python script, first ensuring you have at least 10GB of storage, for both downloaded files and generated tiles.
+
+Check the installer/config.json for installation paths. This will result in a folder containing the basic viewer and the
 generated tiles. This will take some time, as the source files can be large.
 
 Contribution & Collaboration
