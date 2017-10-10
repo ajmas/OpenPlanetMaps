@@ -34,9 +34,9 @@ Requirements:
   - GDAL
     - provides ogr2ogr, used by `kmz2geojson.py`
 
-You'll need to run the installer/install.py Python script, first ensuring you have at least 10GB of storage, for both downloaded files and generated tiles.
+You'll need to run the `installer/install.py` Python script, first ensuring you have at least 10GB of storage, for both downloaded files and generated tiles.
 
-Check the installer/config.json for installation paths. This will result in a folder containing the basic viewer and the
+Check the `installer/config.json` for installation paths. This will result in a folder containing the basic viewer and the
 generated tiles. This will take some time, as the source files can be large.
 
 Contribution & Collaboration
