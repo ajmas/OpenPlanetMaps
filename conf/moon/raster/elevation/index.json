@@ -14,7 +14,7 @@
             "url": "http://astropedia.astrogeology.usgs.gov/download/Moon/LRO/LOLA/thumbs/Moon_LRO_LOLA_global_LDEM_1024.jpg"
         }, {
             "quality": "high",
-            "url": "http://planetarymaps.usgs.gov/mosaic/Lunar_LRO_LOLA_Global_LDEM_118m_Mar2014.cub"
+            "url": "https://planetarymaps.usgs.gov/mosaic/Lunar_LRO_LOLA_Global_LDEM_118m_Mar2014.tif"
         }]
     }
 }

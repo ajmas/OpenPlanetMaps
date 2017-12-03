@@ -2,5 +2,6 @@
     "celestialDataPath": "../conf",
     "staticAssetsPath": "../public",
     "outputPath": "../build",
-    "cachePath": "../cache"
+    "cachePath": "../cache",
+    "quality": "high"
 }

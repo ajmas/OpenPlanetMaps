@@ -1,0 +1,7 @@
+{
+    "name": "Europa",
+    "satelliteOf": "Jupiter",
+    "references": {
+        "Wikipedia": "https://en.wikipedia.org/wiki/Europa_(moon)"
+    }
+}

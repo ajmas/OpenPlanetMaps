@@ -17,7 +17,7 @@
             "url": "https://astropedia.astrogeology.usgs.gov/download/Io/Voyager-Galileo/Io_GalileoSSI-Voyager_Global_Mosaic_ClrMerge_1km.cub/max.jpg"
         }, {
             "quality": "high",
-            "url": "https://astropedia.astrogeology.usgs.gov/download/Io/Voyager-Galileo/Io_GalileoSSI-Voyager_Global_Mosaic_ClrMerge_1km.cub"
+            "url": "https://planetarymaps.usgs.gov/mosaic/Io_GalileoSSI-Voyager_Global_Mosaic_ClrMerge_1km.tif"
         }]
     }
 }

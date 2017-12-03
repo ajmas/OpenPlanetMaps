@@ -1,0 +1,17 @@
+{
+    "name": "MGS MOLA Elevation Model",
+    "celestialBody": "Mars",
+    "description": "",
+    "license": "public-domain",
+    "linkTo": "https://astrogeology.usgs.gov/search/map/Mars/GlobalSurveyor/MOLA/Mars_MGS_MOLA_DEM_mosaic_global_463m",
+    "author": "USGS Astrogeology Science Center",
+    "credit": "USGS Astrogeology Science Center",
+    "updated": "2017-11-27",
+    "source": {
+        "descriptive": "https://astrogeology.usgs.gov/search/map/Mars/GlobalSurveyor/MOLA/Mars_MGS_MOLA_DEM_mosaic_global_463m",
+        "images": [{
+            "quality": "high",
+            "url": "https://planetarymaps.usgs.gov/mosaic/Mars_MGS_MOLA_DEM_mosaic_global_463m.tif"
+        }]
+    }
+}

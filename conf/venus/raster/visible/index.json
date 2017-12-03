@@ -12,7 +12,7 @@
             "url": "http://astropedia.astrogeology.usgs.gov/download/Venus/Magellan/Colorized/thumbs/Venus_Magellan_C3-MDIR_Colorized_Global_Mosaic_4641m.jpg"
         }, {
             "quality": "high",
-            "url": "http://astropedia.astrogeology.usgs.gov/download/Venus/Magellan/Colorized/Venus_Magellan_C3-MDIR_Colorized_Global_Mosaic_4641m.cub"
+            "url": "https://planetarymaps.usgs.gov/mosaic/Venus_Magellan_C3-MDIR_Colorized_Global_Mosaic_4641m.tif"
         }]
     }
 }

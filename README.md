@@ -2,6 +2,7 @@
 
 [![Join the chat at https://gitter.im/OpenPlanetMaps/Lobby](https://badges.gitter.im/OpenPlanetMaps/Lobby.svg)](https://gitter.im/OpenPlanetMaps/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+
 Open Planet Maps
 ================
 
@@ -25,19 +26,7 @@ This is still very much a work in progress and not ready for deployment.
 Installation
 ------------
 
-Requirements:
-
-  - Python
-    - provides the execution environment
-  - Imagemagick
-    - provides convert command, used by `tile_generator.py`
-  - GDAL
-    - provides ogr2ogr, used by `kmz2geojson.py`
-
-You'll need to run the `installer/install.py` Python script, first ensuring you have at least 10GB of storage, for both downloaded files and generated tiles.
-
-Check the `installer/config.json` for installation paths. This will result in a folder containing the basic viewer and the
-generated tiles. This will take some time, as the source files can be large.
+See the [README](installer/README.md) for the installer for details.
 
 Contribution & Collaboration
 ----------------------------
@@ -46,6 +35,15 @@ This is a project that is being done in available time and is not sponsored.
 If you would like to contribute or collaborate in any way, then the best place
 to start is on the OpenPlanetMaps channel on Gitter.
 
-You should note that I am not a cartographer, so everything up to here is based
-on a best effort, as I have researched things on the net. There is is certainly
-plenty of ways in which this can be improved. 
+You should note that the intial author is not a cartographer, so
+everything up to here is based on a best effort. If you feel you can improve and correct, then please do so.
+
+License
+-------
+
+Code is released using the [MIT license](https://choosealicense.com/licenses/mit/).
+
+Data should be treated as public domain, unless otherwise specified.
+
+Please attribute as appropriate, and if we forgot to attribute something please let us know.
+

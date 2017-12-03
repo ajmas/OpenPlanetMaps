@@ -11,7 +11,7 @@
         "descriptive": "http://www.jpl.nasa.gov/spaceimages/details.php?id=PIA12577",
         "images": [{
             "quality": "high",
-            "url": "http://photojournal.jpl.nasa.gov/tiff/PIA12577.tif"
+            "url": "https://planetarymaps.usgs.gov/mosaic/Dione_Cassini_Voyager_mosaic_global_154m.tif"
         }]
     }
 }

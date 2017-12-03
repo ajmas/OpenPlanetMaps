@@ -11,7 +11,7 @@
         "descriptive": "https://astrogeology.usgs.gov/search/map/Mercury/Messenger/Global/Mercury_MESSENGER_MDIS_Basemap_BDR_Mosaic_Global_166m",
         "images": [{
             "quality": "high",
-            "url": "https://astropedia.astrogeology.usgs.gov/downloadBig/Mercury/Messenger/Global/Mercury_MESSENGER_MDIS_Basemap_BDR_Mosaic_Global_166m.cub"
+            "url": "https://planetarymaps.usgs.gov/mosaic/Mercury_MESSENGER_MDIS_Basemap_BDR_Mosaic_Global_166m.tif"
         }]
     }
 }

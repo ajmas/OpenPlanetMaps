@@ -1,4 +1,3 @@
-#!/usr/bin/python
 
 from __future__ import print_function
 from subprocess import call
@@ -12,6 +11,8 @@ import argparse
 
 import tile_generator
 import kmz2geojson
+import convert_cub_to_png
+import convert_jp2_to_tiff
 
 """
 This installer script takes care of going through the configuration
@@ -35,11 +36,8 @@ The general flow:
       - Convert
 
 """
-# import curses
 
-# from stat import *
-
-VERSION = '0.4.0'
+VERSION = '0.5.0'
 
 SUPPORTED_DATA_TYPES = ['feature', 'raster', 'vector']
 KILIBYTE = 1024
@@ -50,7 +48,6 @@ MEGABYTE = KILOBYTE * 1000
 GIGABYTE = MEGABYTE * 1000
 
 DEFAULT_QUALITY = 'low'
-#quality = 'low'
 
 def log(text):
     """ logging output """
@@ -85,11 +82,11 @@ def format_bytes_metric(size):
 # def convertKmzToGeojson(src_file, ):
 #     return call(["ogr2ogr", '-f', 'GeoJSON', src_file, out_file])
 
-def get_path(x):
-    if 'layer' in x:
-        return x['layer']
-    else:
-        return ''
+# def get_path(x):
+#     if 'layer' in x:
+#         return x['layer']
+#     else:
+#         return ''
 
 def mkdir(abs_path, mode=0o777):
     """ Creates the specified folder path if it does not exist """
@@ -124,14 +121,21 @@ def download_resource(url, download_dir, force=False):
 
     path = os.path.join(download_dir, filename)
 
-    response = requests.get(url, stream=True, allow_redirects=True)
+    headers = {'Range': 'bytes=%d-' % 0}
+    response = requests.get(url, stream=True, allow_redirects=True, headers=headers)
     remote_filesize = float(response.headers['content-length'])
 
     # check to see if file exists and that the file sizes matches,
     # otherwise we will download
     if os.path.exists(path):
-        local_filesize = os.stat(path).st_size    
+        local_filesize = os.stat(path).st_size
         download = local_filesize != remote_filesize
+        ## TODO handle resuming download
+        if local_filesize > 0:
+            #response.connection.close()
+            headers = {'Range': 'bytes=%d-' % local_filesize}
+            #response = requests.get(url, stream=True, allow_redirects=True)
+        
 
     # we donwload if we are either forced to or the above logic indicates
     # that we should download
@@ -140,14 +144,16 @@ def download_resource(url, download_dir, force=False):
         output_file = open(path, 'wb')
         chunk_size = 1024
         total = 0
-
+        
         for chunk in response.iter_content(chunk_size=chunk_size):
             if chunk: # filter out keep-alive new chunks
                 total += chunk_size
                 output_file.write(chunk)
-                print("\r" + 'received ... '
-                      + str(round((total * 1.0)/remote_filesize*100, 2)) + '% '
-                      + format_bytes(total) + ' of ' + format_bytes(remote_filesize) + '   ', end='')
+                output_file.flush()
+                print("\r" + 'received ... ' +
+                      str(round((total * 1.0)/remote_filesize*100, 2)) + '% ' +
+                      format_bytes(total) + ' of ' + format_bytes(remote_filesize) +
+                      '   ', end='')
         print()
         output_file.flush()
         output_file.close()
@@ -172,31 +178,49 @@ def write_json(path, data):
         json.dump(data, outfile, sort_keys=True, indent=2)
 
 def process_raster(abs_path, output_path, json_data, config):
+    #pylint: disable=unused-argument
     """ Processes a raster (pixel based images) dataset directory """
-    if 'source' in json_data:
-        sources = json_data['source']
-        if 'images' in sources:
-            images = sources.get('images')
-            for image in images:
-                if 'quality' in image and image.get('quality') == config['quality']:
-                    cached_path = download_resource(
-                        image.get('url'), resolve_path(config['base_folder'], config['cachePath']))
-                    if (not config['options'].download_only):
-                        print('Creating map tile for planet/type/name [todo]')
-                        tile_generator.process(cached_path, output_path)
-        return True
+    if not config['options'].features_only and not config['options'].vector_only:
+        if 'source' in json_data:
+            sources = json_data['source']
+            if 'images' in sources:
+                images = sources.get('images')
+                for image in images:
+                    if 'quality' in image and image.get('quality') == config['quality']:
+                        cached_path = download_resource(image.get('url'),
+                                                        resolve_path(config['base_folder'],
+                                                                     config['cachePath']))
+
+                        if not config['options'].download_only:
+                            if cached_path.endswith('.cub'):
+                                tif_cub = cached_path + '.tif'
+                                convert_cub_to_png.convert(cached_path, tif_cub)
+                                cached_path = tif_cub
+                            elif cached_path.endswith('.jp2'):
+                                tif_jp2 = cached_path + '.tif'
+                                convert_jp2_to_tiff.convert(cached_path, tif_jp2)
+                                cached_path = tif_jp2
+                        
+                            print('Creating map tile for planet/type/name [todo]')
+                            tile_generator.process(cached_path, output_path)
+            return True
 
 def process_vector(abs_path, output_path, json_data, config):
+    #pylint: disable=unused-argument
     """ Processes a vector dataset directory """
+    #if not config['options'].features_only and not config['options'].raster_only:
     print('TODO vector ' + abs_path)
     return False
 
 def process_features(abs_path, output_path, json_data, config):
+    #pylint: disable=unused-argument
     """ Processes a feature dataset directory """
+    #if not config['options'].vector_only and not config['options'].raster_only:
     print('TODO features ' + abs_path)
     return False
 
 def process_dataset(abs_path, output_path, celestial_object, config):
+    #pylint: disable=unused-argument
     """ TODO docs """
     json_data = None
     if os.path.exists(os.path.join(abs_path, 'index.json')):
@@ -207,15 +231,15 @@ def process_dataset(abs_path, output_path, celestial_object, config):
         if dataset_type == 'raster':
             process_raster(abs_path, output_path, json_data, config)
             # print('xxxx ' + output_path)
-            write_json(os.path.join(output_path, 'index.json'), json_data)            
+            write_json(os.path.join(output_path, 'index.json'), json_data)
             #return json_data
         elif dataset_type == 'vector':
             #process_vector(abs_path, output_path, json_data, config)
             #return json_data
-            json_data = None            
+            json_data = None
         elif dataset_type == 'features':
             #process_features(abs_path, output_path, json_data, config)
-            json_data = None           
+            json_data = None
         else:
             print('Error: unknown dataset type ' + dataset_type)
             json_data = None
@@ -239,8 +263,8 @@ def process_datasets(abs_path, output_path, celestial_object, dataset_type, conf
             child_output_path = os.path.join(output_path, dataset)
             mkdir(child_output_path)
             print('Processing dataset ' + celestial_object + '/' + dataset)
-            json_data = process_dataset(child_path, child_output_path, dataset, config)            
-            
+            json_data = process_dataset(child_path, child_output_path, dataset, config)
+
             # return just the fields we want to appear in the main index
             if json_data:
                 author = None
@@ -257,7 +281,7 @@ def process_datasets(abs_path, output_path, celestial_object, dataset_type, conf
                     'license': json_data['license'],
                     'author': author,
                     'href': link_to,
-                    })                            
+                    })
     return all_layers
 
 def process_celestial_object(abs_path, output_path, celestial_object, config):
@@ -277,9 +301,9 @@ def process_celestial_object(abs_path, output_path, celestial_object, config):
             child_output_path = os.path.join(output_path, dataset_type)
             mkdir(child_output_path)
             layer_data += process_datasets(child_path, child_output_path,
-                  celestial_object, dataset_type, config)            
+                                           celestial_object, dataset_type, config)
 
-    json_data['layers'] =layer_data ## map(get_path, layer_data)
+    json_data['layers'] = layer_data ## map(get_path, layer_data)
     write_json(os.path.join(output_path, 'index.json'), json_data)
     return json_data
 
@@ -323,7 +347,7 @@ def process_static_assets(abs_path, output_path):
 
 def load_config(config_file):
     """ loads the base installer configuration and resolves the paths """
-    if config_file == None:
+    if config_file is None:
         base_folder = os.path.dirname(os.path.realpath(__file__))
         config = read_json(os.path.join(base_folder, 'config.json'))
     else:
@@ -336,25 +360,44 @@ def load_config(config_file):
     config['celestialDataPath'] = resolve_path(base_folder, config['celestialDataPath'])
     # config['buildPath'] = resolve_path(base_folder, config['buildPath'])
     config['staticAssetsPath'] = resolve_path(base_folder, config['staticAssetsPath'])
-    config['quality'] = DEFAULT_QUALITY
+
+    if not 'quality' in config:
+        config['quality'] = DEFAULT_QUALITY
+
     return config
 
 def main():
     """ Main function, partly to be sure we aren't making variables
         unnecessarily global """
 
-    parser = argparse.ArgumentParser(description='OpenPlanetMaps tile generator ' + VERSION + ' - http://openplanetmaps.org')
+    version_str = ('OpenPlanetMaps tile generator ' + VERSION +
+                   ' - http://openplanetmaps.org')
+
+    parser = argparse.ArgumentParser(description=version_str)
 
     parser.add_argument('-d', '--download-only', action='store_true',
-                    help='download files only, don\'t generate tiles')
+                        help='download files only, don\'t generate tiles')
     parser.add_argument('-c', '--config-file', metavar='CONFIG_FILE',
-                    help='path to alternative configuration file')
+                        help='path to alternative configuration file')
+    parser.add_argument('-f', '--features-only', action='store_true',
+                        help='only process feature data types')
+    parser.add_argument('-r', '--raster-only', action='store_true',
+                        help='only process raster data types')
+    parser.add_argument('-v', '--vector-only', action='store_true',
+                        help='only process vector data types')
+    parser.add_argument('--version', action='store_true',
+                        help='display the version information')
 
     args = parser.parse_args()
 
     config = load_config(args.config_file)
     config['options'] = args
-    
+
+
+    if args.version:
+        print(version_str)
+        return
+
     ### Create output folder
     mkdir(config['outputPath'])
 

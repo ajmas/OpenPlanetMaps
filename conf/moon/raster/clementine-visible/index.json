@@ -15,7 +15,7 @@
             "url": "https://astropedia.astrogeology.usgs.gov/download/Moon/Clementine/UVVIS/thumbs/Lunar_Clementine_UVVIS_750nm_Global_Mosaic_1024.jpg"
         }, {
             "quality": "xhigh",
-            "url": "https://astropedia.astrogeology.usgs.gov/download/Moon/Clementine/UVVIS/ancillary/Clem_UVVIS_Mosaic_Global_256ppd_v2.jp2"
+            "url": "https://planetarymaps.usgs.gov/mosaic/Lunar_Clementine_UVVIS_750nm_Global_Mosaic_118m_v2.tif"
         }]
     }
 }

@@ -1,0 +1,17 @@
+{
+    "name": "MGS MOLA Global Grayscale Hillshade",
+    "celestialBody": "Mars",
+    "description": "",
+    "license": "public-domain",
+    "linkTo": "https://astrogeology.usgs.gov/search/details/Mars/GlobalSurveyor/MOLA/Mars_MGS_MOLA_DEM_mosaic_global_463m/cub",
+    "author": "USGS Astrogeology Science Center",
+    "credit": "USGS Astrogeology Science Center",
+    "updated": "2017-11-27",
+    "source": {
+        "descriptive": "https://astrogeology.usgs.gov/search/details/Mars/GlobalSurveyor/MOLA/Mars_MGS_MOLA_DEM_mosaic_global_463m/cub",
+        "images": [{
+            "quality": "high",
+            "url": "https://planetarymaps.usgs.gov/mosaic/Mars_MGS_MOLA_DEM_mosaic_global_463m.tif"
+        }]
+    }
+}

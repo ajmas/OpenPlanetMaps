@@ -4,6 +4,10 @@
     "description": "",
     "license": "public-domain",
     "linkTo": "https://www.nasa.gov/mission_pages/NPP/news/earth-at-night.html",
+    "links": [{
+        "name": "Night Lights 2012 - Flat map",
+        "url": "https://earthobservatory.nasa.gov/NaturalHazards/view.php?id=79765"
+    }],
     "author": "NASA Earth Observatory/NOAA NGDC",
     "credit": "NASA Earth Observatory/NOAA NGDC",
     "updated": "2014-10-22",
@@ -12,6 +16,9 @@
         "images": [{
             "quality": "low",
             "url": "https://www.nasa.gov/sites/default/files/images/712130main_8246931247_e60f3c09fb_o.jpg"
+        }, {
+            "quality": "low",
+            "url": "https://eoimages.gsfc.nasa.gov/images/imagerecords/79000/79765/dnb_land_ocean_ice.2012.54000x27000_geo.tif"
         }]
     }
 }
