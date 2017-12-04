@@ -1,5 +1,5 @@
 {
-    "name": "Visible",
+    "name": "Mercury MESSENGER MDIS Global Basemap BDR",
     "celestialBody": "Mercury",
     "description": "",
     "license": "public-domain",
@@ -13,5 +13,6 @@
             "quality": "high",
             "url": "https://planetarymaps.usgs.gov/mosaic/Mercury_MESSENGER_MDIS_Basemap_BDR_Mosaic_Global_166m.tif"
         }]
-    }
+    },
+    "baseLayer": true
 }

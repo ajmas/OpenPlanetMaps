@@ -19,5 +19,6 @@
             "quality": "xhigh",
             "url": "https://planetarymaps.usgs.gov/mosaic/LRO_WAC_Mosaic_Global_303ppd_v3.jp2"
         }]
-    }
+    },
+    "baseLayer": true
 }

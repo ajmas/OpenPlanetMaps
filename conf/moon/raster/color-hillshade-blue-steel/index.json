@@ -1,0 +1,21 @@
+{
+    "name": "LOLA Color Hillshade",
+    "celestialBody": "The Moon",
+    "description": "Lunar LOLA Color Hillshade 128ppd v04 (237m)",
+    "license": "public-domain",
+    "linkTo": "https://astrogeology.usgs.gov/search/map/Moon/LMMP/LOLA-derived/Lunar_LRO_LOLA_ClrShade_Global_128ppd_v04",
+    "author": "Lunar Mapping and Modeling Project",
+    "credit": "Lunar Mapping and Modeling Project",
+    "updated": "2017-05-15",
+    "source": {
+        "descriptive": "https://astrogeology.usgs.gov/search/map/Moon/LMMP/LOLA-derived/Lunar_LRO_LOLA_ClrShade_Global_128ppd_v04",
+        "images": [{
+            "quality": "low",
+            "url": "http://astropedia.astrogeology.usgs.gov/download/Moon/LMMP/LOLA-derived/Lunar_LRO_LOLA_ClrShade_Global_128ppd_v04.cub/full.jpg"
+        }, {
+            "quality": "high",
+            "url": "https://planetarymaps.usgs.gov/mosaic/Lunar_LRO_LOLA_ClrShade_Global_128ppd_v04.tif"
+        }]
+    },
+    "baseLayer": true
+}

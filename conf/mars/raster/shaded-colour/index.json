@@ -2,7 +2,7 @@
     "name": "MGS MOLA Global Colorized Hillshade",
     "celestialBody": "Mars",
     "description": "",
-    "license": "public-domain",
+    "license": "public domain",
     "linkTo": "https://astrogeology.usgs.gov/search/map/Mars/GlobalSurveyor/MOLA/Mars_MGS_MOLA_ClrShade_merge_global_463m",
     "author": "USGS Astrogeology Science Center, Goddard Space Flight Center, NASA",
     "credit": "USGS Astrogeology Science Center, Goddard Space Flight Center, NASA",
@@ -13,5 +13,6 @@
             "quality": "high",
             "url": "https://planetarymaps.usgs.gov/mosaic/Mars_MGS_MOLA_ClrShade_merge_global_463m.tif"
         }]
-    }
+    },
+    "baseLayer": true
 }

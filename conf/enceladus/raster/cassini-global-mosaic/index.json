@@ -1,0 +1,21 @@
+{
+    "name": "Cassini Global Mosaic",
+    "celestialBody": "Enceladus",
+    "description": "",
+    "license": "public domain",
+    "linkTo": "https://astrogeology.usgs.gov/search/map/Enceladus/Cassini/Enceladus_Cassini_mosaic_global_110m",
+    "author": "Cassini Team, Jet Propulsion Laboratory, Space Science Institute",
+    "credit": "Cassini Team, Jet Propulsion Laboratory, Space Science Institute",
+    "updated": "2017-05-12",
+    "source": {
+        "descriptive": "https://astrogeology.usgs.gov/search/map/Enceladus/Cassini/Enceladus_Cassini_mosaic_global_110m",
+        "images": [{
+            "quality": "low",
+            "url": "http://astropedia.astrogeology.usgs.gov/download/Enceladus/Cassini/Enceladus_Cassini_mosaic_global_110m.cub/full.jpg"
+        }, {
+            "quality": "high",
+            "url": "https://planetarymaps.usgs.gov/mosaic/Enceladus_Cassini_mosaic_global_110m.tif"
+        }]
+    },
+    "baseLayer": true
+}

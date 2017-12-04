@@ -1,19 +1,3 @@
-
-from __future__ import print_function
-from subprocess import call
-import random
-import string
-import requests
-import json
-import os
-import shutil
-import argparse
-
-import tile_generator
-import kmz2geojson
-import convert_cub_to_png
-import convert_jp2_to_tiff
-
 """
 This installer script takes care of going through the configuration
 and downloading the assets as needed. For raster images they are
@@ -36,6 +20,20 @@ The general flow:
       - Convert
 
 """
+
+from __future__ import print_function
+import json
+import os
+import shutil
+import argparse
+import random
+import string
+import requests
+
+import tile_generator
+import kmz2geojson
+import convert_cub_to_png
+import convert_jp2_to_tiff
 
 VERSION = '0.5.0'
 
@@ -135,7 +133,7 @@ def download_resource(url, download_dir, force=False):
             #response.connection.close()
             headers = {'Range': 'bytes=%d-' % local_filesize}
             #response = requests.get(url, stream=True, allow_redirects=True)
-        
+
 
     # we donwload if we are either forced to or the above logic indicates
     # that we should download
@@ -144,7 +142,7 @@ def download_resource(url, download_dir, force=False):
         output_file = open(path, 'wb')
         chunk_size = 1024
         total = 0
-        
+
         for chunk in response.iter_content(chunk_size=chunk_size):
             if chunk: # filter out keep-alive new chunks
                 total += chunk_size
@@ -200,7 +198,7 @@ def process_raster(abs_path, output_path, json_data, config):
                                 tif_jp2 = cached_path + '.tif'
                                 convert_jp2_to_tiff.convert(cached_path, tif_jp2)
                                 cached_path = tif_jp2
-                        
+
                             print('Creating map tile for planet/type/name [todo]')
                             tile_generator.process(cached_path, output_path)
             return True
@@ -215,9 +213,18 @@ def process_vector(abs_path, output_path, json_data, config):
 def process_features(abs_path, output_path, json_data, config):
     #pylint: disable=unused-argument
     """ Processes a feature dataset directory """
-    #if not config['options'].vector_only and not config['options'].raster_only:
-    print('TODO features ' + abs_path)
-    return False
+    if not config['options'].vector_only and not config['options'].raster_only:
+        if 'source' in json_data:
+            sources = json_data['source']
+            if 'features' in sources:
+                features = sources.get('features')
+                for feature in features:
+                    cached_path = download_resource(feature.get('url'),
+                                                    resolve_path(config['base_folder'],
+                                                                 config['cachePath']))
+                    if not config['options'].download_only:
+                        kmz2geojson.convert(cached_path, output_path +'/features.geojson')
+            return True
 
 def process_dataset(abs_path, output_path, celestial_object, config):
     #pylint: disable=unused-argument
@@ -230,22 +237,20 @@ def process_dataset(abs_path, output_path, celestial_object, config):
         # return json_data
         if dataset_type == 'raster':
             process_raster(abs_path, output_path, json_data, config)
-            # print('xxxx ' + output_path)
             write_json(os.path.join(output_path, 'index.json'), json_data)
-            #return json_data
         elif dataset_type == 'vector':
             #process_vector(abs_path, output_path, json_data, config)
             #return json_data
             json_data = None
         elif dataset_type == 'features':
-            #process_features(abs_path, output_path, json_data, config)
-            json_data = None
+            process_features(abs_path, output_path, json_data, config)
+            write_json(os.path.join(output_path, 'index.json'), json_data)
         else:
             print('Error: unknown dataset type ' + dataset_type)
             json_data = None
 
 
-        print(json_data)
+#        print(json_data)
 
     return json_data
 
@@ -269,10 +274,13 @@ def process_datasets(abs_path, output_path, celestial_object, dataset_type, conf
             if json_data:
                 author = None
                 link_to = None
+                base_layer = False
                 if 'author' in json_data:
                     author = json_data['author']
                 if 'linkTo' in json_data:
                     link_to = json_data['linkTo']
+                if 'baseLayer' in json_data:
+                    base_layer = json_data['baseLayer']
 
                 all_layers.append({
                     'name': json_data['name'],
@@ -281,6 +289,7 @@ def process_datasets(abs_path, output_path, celestial_object, dataset_type, conf
                     'license': json_data['license'],
                     'author': author,
                     'href': link_to,
+                    'baseLayer': base_layer
                     })
     return all_layers
 

@@ -1,0 +1,21 @@
+{
+    "name": "LOLA Color Hillshade Blue Steel",
+    "celestialBody": "The Moon",
+    "description": "Lunar LOLA Color Hillshade Blue Steel 64ppd (474m)",
+    "license": "public-domain",
+    "linkTo": "https://astrogeology.usgs.gov/search/map/Moon/LMMP/LOLA-derived/Lunar_LRO_LOLA_ClrShade_Global_64ppd_BlueSteel",
+    "author": "USGS Astrogeology Science Center",
+    "credit": "USGS Astrogeology Science Center",
+    "updated": "2017-05-15",
+    "source": {
+        "descriptive": "https://astrogeology.usgs.gov/search/map/Moon/LMMP/LOLA-derived/Lunar_LRO_LOLA_ClrShade_Global_64ppd_BlueSteel",
+        "images": [{
+            "quality": "low",
+            "url": "http://astropedia.astrogeology.usgs.gov/download/Moon/LMMP/LOLA-derived/thumbs/Lunar_LRO_LOLA_ClrShade_Global_64ppd_BlueSteel_1024.jpg"
+        }, {
+            "quality": "high",
+            "url": "https://planetarymaps.usgs.gov/mosaic/Lunar_LRO_LOLA_ClrShade_Global_64ppd_BlueSteel.tif"
+        }]
+    },
+    "baseLayer": true
+}

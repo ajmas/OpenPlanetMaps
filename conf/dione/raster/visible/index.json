@@ -2,16 +2,17 @@
     "name": "Visible",
     "celestialBody": "Dione",
     "description": "",
-    "license": "unknown",
-    "linkTo": "http://www.jpl.nasa.gov/spaceimages/details.php?id=PIA12577",
+    "license": "public domain",
+    "linkTo": "https://astrogeology.usgs.gov/search/map/Dione/Voyager/Dione_Cassini_Voyager_mosaic_global_154m",
     "author": "NASA/JPL/Space Science Institute",
     "credit": "NASA/JPL/Space Science Institute",
-    "updated": "2011-02-18",
+    "updated": "2017-05-12",
     "source": {
-        "descriptive": "http://www.jpl.nasa.gov/spaceimages/details.php?id=PIA12577",
+        "descriptive": "https://astrogeology.usgs.gov/search/map/Dione/Voyager/Dione_Cassini_Voyager_mosaic_global_154m",
         "images": [{
             "quality": "high",
             "url": "https://planetarymaps.usgs.gov/mosaic/Dione_Cassini_Voyager_mosaic_global_154m.tif"
         }]
-    }
+    },
+    "baseLayer": true
 }
