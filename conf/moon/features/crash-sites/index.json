@@ -1,0 +1,17 @@
+{
+    "name": "Crash sites",
+    "celestialBody": "The Moon",
+    "description": "Landing ",
+    "license": "Public Domain",
+    "linkTo": "https://en.wikipedia.org/wiki/Moon_landing",
+    "baseLayer": false,
+    "references": [
+        "https://en.wikipedia.org/wiki/Moon_landing",
+        "https://www.hq.nasa.gov/alsj/alsjcoords.html",
+        "https://airandspace.si.edu/explore-and-learn/topics/apollo/apollo-program/landing-missions/sites.cfm"
+    ],
+    "source": {
+        "descriptive": "https://en.wikipedia.org/wiki/Moon_landing",
+        "data": "features.tsv"
+    }
+}

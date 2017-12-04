@@ -1,8 +1,8 @@
 {
-    "name": "Martian Features",
+    "name": "Geological Features",
     "celestialBody": "Mars",
     "description": "",
-    "license": "public domain",
+    "license": "public-domain",
     "linkTo": "http://planetarynames.wr.usgs.gov/",
     "author": "IAU, USGS Astrogeology Science Center, NASA",
     "source": {

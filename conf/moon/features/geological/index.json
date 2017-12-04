@@ -1,0 +1,15 @@
+{
+    "name": "Geological Features",
+    "celestialBody": "The Moon",
+    "description": "Geological feature of the moon ",
+    "license": "Public Domain",
+    "linkTo": "https://en.wikipedia.org/wiki/List_of_lunar_features",
+    "baseLayer": false,
+    "references": [
+        "https://en.wikipedia.org/wiki/List_of_lunar_features"
+    ],
+    "source": {
+        "descriptive": "https://en.wikipedia.org/wiki/List_of_lunar_features",
+        "data": "the-moon-geological.csv"
+    }
+}

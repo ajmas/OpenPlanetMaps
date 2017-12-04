@@ -16,8 +16,9 @@
             "quality": "medium",
             "url": "https://astropedia.astrogeology.usgs.gov/downloadBig/Moon/LRO/LROC_WAC/ancillary/LRO_WAC_Mosaic_Global_303ppd_v3.jp2"
         }, {
-            "quality": "high",
-            "url": "https://astropedia.astrogeology.usgs.gov/downloadBig/Moon/LRO/LROC_WAC/ancillary/LRO_WAC_Mosaic_Global_303ppd_v3.tif"
+            "quality": "xhigh",
+            "url": "https://planetarymaps.usgs.gov/mosaic/LRO_WAC_Mosaic_Global_303ppd_v3.jp2"
         }]
-    }
+    },
+    "baseLayer": true
 }

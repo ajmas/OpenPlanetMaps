@@ -8,6 +8,15 @@ var overlayMaps = {};
 var layerControl;
 var celestialBodiesById;
 
+var geojsonMarkerOptions = {
+    radius: 4,
+    fillColor: "#00f",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.9
+};
+
 function clearLayers() {
     baseMaps = {};
     overlayMaps = {};
@@ -17,33 +26,71 @@ function clearLayers() {
     map.eachLayer(function(layer) {
         map.removeLayer(layer);
     });
+    map.panTo(new L.LatLng(0,0));
 }
 
 function loadCelestialBodyData(celestialBody) {
     clearLayers();
-    console.log('celestialBody', celestialBody);
+
+
+
     $.getJSON(tilesPath + celestialBody + '/index.json', function(data) {
         var i;
         var layers = data.layers;
+        var defaultBaseLayer;
         for (i = 0; i < layers.length; i++) {
-            if (layers[i].base) {
-                baseMaps[layers[i].name] = L.tileLayer(tilesPath + '{id}/{mapPath}/{z}/{x}/{y}.jpg', {
+            if (layers[i].baseLayer) {
+                var path = layers[i].path;
+                if (path.startsWith(celestialBody + '/')) {
+                    path = path.substring(celestialBody.length + 1, path.length);
+                }
+                baseMaps[layers[i].name] = L.tileLayer(tilesPath + '{id}/{mapPath}/{z}/{x}/{y}.png', {
                     attribution: 'Map data ' + layers[i].license + ' <a href="' + layers[i].href + '">' + layers[i].author + '</a>',
-                    maxZoom: 18,
                     id: celestialBody,
-                    mapPath: layers[i].path
+                    mapPath: path
                 });
-                baseMaps[layers[i].name].addTo(map);
+                if (!defaultBaseLayer) {
+                    defaultBaseLayer = baseMaps[layers[i].name];
+                }
+            } else if (layers[i].type === 'features') {
+                // Assuming features are geojson.
+                var path = tilesPath + layers[i].path;
+                overlayMaps[layers[i].name] = new L.GeoJSON.AJAX(path + '/features.geojson', {
+                    pointToLayer: function (feature, latlng) {
+                        return L.circleMarker(latlng, geojsonMarkerOptions);
+                    },
+                    // middleware:function(data){
+                    //    console.log(data);
+                    //    if (data.features) {
+                    //       var features = data.features;
+                    //       for (var i=0; i<features.length; i++) {
+                    //          var properties = features[i].properties;
+                    //          properties.name = properties.Name;
+                    //       }
+                    //    }
+                    //    return data;
+                    // },
+                    onEachFeature: function (feature, layer) {
+                        layer.bindTooltip(feature.properties.Name);
+                    }
+                });
+            } else {
+                console.warn('unknown layer type:', layers[i].type);
             }
         }
         layerControl = L.control.layers(baseMaps, overlayMaps);
         layerControl.addTo(map);
-        map.setZoom(0);
+        map.setZoom(3);
+        map.panTo(new L.LatLng(0,0));
+
+        // Display a base layer by default
+        if (defaultBaseLayer) {
+            defaultBaseLayer.addTo(map);
+        }
     })
 }
 
 function onClick(event) {
-   
     if (event.target.localName !== 'span') {
         return
     }
@@ -59,25 +106,22 @@ function initCelestialBodies() {
         var options = '';
         var i;
 
-        console.log('data', data);
         if (data) {
-            celestialBodies = data;
             celestialBodiesById = {};
-            var entries = celestialBodies;
-            for (i = 0; i < entries.length; i++) {
-                if (!entries[i].id) {
-                    entries[i].id = 'nav-entry-' + i;
+            var celestialBodies = data.entries;
+            for (i = 0; i < celestialBodies.length; i++) {
+                if (!celestialBodies[i].id) {
+                    celestialBodies[i].id = celestialBodies[i].path;
                 }
-                celestialBodiesById[entries[i].id] = entries[i];
-                options += '<li class="nav-item ' + entries[i].id + '" id="' + entries[i].id + '"><span>' + entries[i].name + '</span></li>';
+                celestialBodiesById[celestialBodies[i].id] = celestialBodies[i];
+                options += '<li class="nav-item ' + celestialBodies[i].id + '" id="' + celestialBodies[i].id + '"><span>' + celestialBodies[i].name + '</span></li>';
             }
-            console.log(options);
             $('.navbar-nav').html(options);
             $('.navbar-nav li').eq(0).addClass('active');
-            
+
             $('.navbar-nav > li > span').on('click', onClick);
 
-            changeCelestialBody(entries[0].path);
+            changeCelestialBody(celestialBodies[0].path);
         }
     });
 }
