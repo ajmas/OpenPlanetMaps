@@ -23,6 +23,19 @@ data and then via a script prepare the content for distribution.
 
 This is still very much a work in progress and not ready for deployment.
 
+But Google...
+-------------
+
+The comparison should be more to OpenStreetMap and not Google Map. The idea is
+create an open platform that anyone in the community can benefit from, and
+contribute to. We may not all be scientists, but to get people engaged and
+interested is important. Part of that is by reducing the barrier of entry to
+the data that is already out there and another part is allowing anyone to
+contribute to improving what is to improve what is already there.
+
+The current philosophy is to be agnostic from any hosting platform, but eventually
+we foresee scripts to allow you deploy to the platform of your choice.
+
 Installation
 ------------
 
