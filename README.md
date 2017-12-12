@@ -31,8 +31,8 @@ other astral bodies. The idea is create an open platform that anyone in the
 community can benefit from, and contribute to. We may not all be scientists,
 but to get people engaged and interested is important. Part of that is by
 reducing the barrier of entry to the data that is already out there and another
-part is allowing anyone to contribute to improving what is to improve what is
-already there.
+part is allowing anyone to contribute to improving what is already there, and
+finally to create a discussion.
 
 The current philosophy is to be agnostic from any hosting platform, but eventually
 we foresee scripts to allow you deploy to the platform of your choice.
